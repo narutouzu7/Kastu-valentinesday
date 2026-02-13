@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kastu 💖 Himanshu | Valentine Countdown</title>
+  <meta name="description" content="A cute loving Valentine website for Kastu — Mumbai ↔ Japan. Secret unlocks on Feb 14 (IST)." />
+
+  <style>
+    :root{
+      --bg1:#080b17;
+      --bg2:#1a103f;
+      --card:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.18);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.72);
+      --pink:#ff5ea8;
+      --rose:#ff3d7f;
+      --mint:#43ffd1;
+      --gold:#ffd36a;
+      --shadow: 0 18px 70px rgba(0,0,0,.38);
+      --radius: 22px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(255,94,168,.23), transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, rgba(67,255,209,.16), transparent 65%),
+        radial-gradient(1000px 700px at 50% 100%, rgba(255,211,106,.16), transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+    }
+    a{color:inherit}
+
+    /* ====== Ambient background glow blobs (smooth) ====== */
+    .glow{
+      position:fixed; inset:-10vh; z-index:0; pointer-events:none; overflow:hidden;
+      filter: blur(32px);
+      opacity:.8;
+    }
+    .blob{
+      position:absolute; width:520px; height:520px; border-radius:999px;
+      transform: translate3d(0,0,0);
+      animation: blobMove 12s ease-in-out infinite;
+      mix-blend-mode: screen;
+    }
+    .b1{ background: radial-gradient(circle at 30% 30%, rgba(255,94,168,.55), transparent 60%); left:-140px; top:-120px; animation-duration: 14s;}
+    .b2{ background: radial-gradient(circle at 30% 30%, rgba(67,255,209,.45), transparent 60%); right:-180px; top:-80px; animation-duration: 16s;}
+    .b3{ background: radial-gradient(circle at 30% 30%, rgba(255,211,106,.40), transparent 60%); left:18vw; bottom:-220px; animation-duration: 18s;}
+    @keyframes blobMove{
+      0%{ transform: translate3d(0,0,0) scale(1); }
+      50%{ transform: translate3d(40px,-20px,0) scale(1.08); }
+      100%{ transform: translate3d(0,0,0) scale(1); }
+    }
+
+    /* ====== Floating hearts (optimized) ====== */
+    .float-layer{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0}
+    .heart{
+      position:absolute;
+      width:16px; height:16px;
+      transform: rotate(45deg) translateZ(0);
+      background:rgba(255,94,168,.22);
+      border-radius:4px;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,.25));
+      animation: drift linear infinite;
+      opacity:.6;
+      will-change: transform, opacity;
+    }
+    .heart:before,.heart:after{
+      content:""; position:absolute; width:16px; height:16px; background:inherit; border-radius:50%;
+    }
+    .heart:before{left:-8px; top:0}
+    .heart:after{left:0; top:-8px}
+    @keyframes drift{
+      from{ transform:translate3d(0,110vh,0) rotate(45deg); opacity:0}
+      10%{opacity:1}
+      to{ transform:translate3d(var(--dx),-20vh,0) rotate(45deg); opacity:0}
+    }
+
+    /* ====== Layout ====== */
+    .wrap{max-width:1120px;margin:0 auto;padding:28px 18px 86px;position:relative;z-index:1;}
+    header{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;margin-top:10px;}
+    @media (max-width: 920px){header{flex-direction:column}}
+
+    .pill-row{display:flex; gap:10px; flex-wrap:wrap}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      padding:8px 12px; border-radius:999px;
+      font-size:13px; color:var(--muted);
+      backdrop-filter: blur(10px);
+    }
+
+    .title{
+      font-size: clamp(30px, 5vw, 56px);
+      line-height:1.05;letter-spacing:-.02em;margin:6px 0 0;
+      text-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    .subtitle{margin:0;color:var(--muted);font-size: clamp(14px, 2.2vw, 18px);max-width: 70ch;}
+
+    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
+    button{
+      cursor:pointer;border:1px solid var(--stroke);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      padding:10px 14px;border-radius:999px;
+      font-weight:900;letter-spacing:.01em;
+      box-shadow:0 10px 30px rgba(0,0,0,.18);
+      backdrop-filter: blur(12px);
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    button:hover{transform: translateY(-1px); background:rgba(255,255,255,.10)}
+    button:active{transform: translateY(0px) scale(.98)}
+    .primary{border-color:rgba(255,94,168,.50);background: linear-gradient(135deg, rgba(255,94,168,.22), rgba(255,61,127,.10));}
+    .mint{border-color:rgba(67,255,209,.50);background: linear-gradient(135deg, rgba(67,255,209,.16), rgba(67,255,209,.08));}
+    .gold{border-color:rgba(255,211,106,.52);background: linear-gradient(135deg, rgba(255,211,106,.18), rgba(255,255,255,.04));}
+    .ghost{border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06);}
+
+    .grid{display:grid;grid-template-columns: 1.25fr .75fr;gap:16px;margin-top:16px;}
+    @media (max-width: 920px){.grid{grid-template-columns:1fr}.actions{justify-content:flex-start}}
+
+    .card{
+      border:1px solid var(--stroke);background: rgba(255,255,255,.08);
+      border-radius: var(--radius); box-shadow: var(--shadow);
+      padding:16px;backdrop-filter: blur(14px);overflow:hidden;position:relative;
+      transform: translateZ(0);
+    }
+    .card::after{
+      content:"";position:absolute;inset:-50px;
+      background:
+        radial-gradient(420px 260px at 30% 0%, rgba(255,94,168,.16), transparent 60%),
+        radial-gradient(440px 260px at 80% 30%, rgba(67,255,209,.12), transparent 65%),
+        radial-gradient(620px 360px at 40% 100%, rgba(255,211,106,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .card > *{position:relative;z-index:1}
+
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .big-heart{
+      width:112px;height:112px;border-radius:28px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), transparent 45%),
+        linear-gradient(145deg, rgba(255,94,168,.35), rgba(255,61,127,.16));
+      border:1px solid rgba(255,94,168,.35);
+      display:grid;place-items:center;transform: rotate(-6deg) translateZ(0);
+      box-shadow:0 24px 70px rgba(255,94,168,.12);flex: 0 0 auto;
+      animation: popFloat 5.8s ease-in-out infinite;
+    }
+    @keyframes popFloat{0%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(-6deg) translateY(-6px)}100%{transform:rotate(-6deg) translateY(0)}}
+    .big-heart span{font-size:52px;filter: drop-shadow(0 10px 20px rgba(0,0,0,.28))}
+    .quote{font-size:16px;color:var(--muted);margin:10px 0 0;}
+
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--muted);font-size:12px;
+    }
+    .mini{color:var(--muted);font-size:13px;line-height:1.45;}
+    .divider{height:1px;background:rgba(255,255,255,.14);margin:14px 0;}
+
+    .kpi{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+    .kpi .box{
+      flex:1 1 160px;padding:12px;border-radius:16px;
+      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+    }
+    .kpi .label{color:var(--muted);font-size:12px}
+    .kpi .val{font-size:22px;font-weight:950;margin-top:4px}
+
+    /* ====== Hero countdown (premium) ====== */
+    .heroCount{
+      border:1px solid rgba(255,94,168,.38);
+      background: linear-gradient(135deg, rgba(255,94,168,.18), rgba(255,255,255,.04));
+      border-radius:18px;
+      padding:14px;
+      margin-top:12px;
+      position:relative;
+      overflow:hidden;
+    }
+    .heroCount::before{
+      content:"";
+      position:absolute; inset:-60px;
+      background:
+        radial-gradient(420px 220px at 20% 20%, rgba(255,94,168,.16), transparent 60%),
+        radial-gradient(420px 240px at 80% 40%, rgba(67,255,209,.10), transparent 60%),
+        radial-gradient(520px 320px at 50% 120%, rgba(255,211,106,.08), transparent 60%);
+      animation: shimmer 8s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes shimmer{0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)}}
+    .heroCount .big{
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight:1000;
+      letter-spacing:-.02em;
+      margin:6px 0 0;
+      text-shadow:0 20px 60px rgba(0,0,0,.35);
+      position:relative;
+      z-index:1;
+    }
+    .heroCount .sub{color:var(--muted);font-size:13px;margin-top:8px;position:relative;z-index:1;}
+
+    /* ====== Photo slot (fixed + smooth) ====== */
+    .photoSlot{
+      position:relative;
+      margin-top:10px;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.05);
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+      cursor: pointer;
+      transform: translateZ(0);
+      will-change: transform, box-shadow;
+    }
+    .photoFloat{
+      animation: photoFloat 6s ease-in-out infinite;
+    }
+    @keyframes photoFloat{
+      0%{transform: translate3d(0,0,0)}
+      50%{transform: translate3d(0,-10px,0)}
+      100%{transform: translate3d(0,0,0)}
+    }
+    .photoSlot::before{
+      content:"";
+      position:absolute; inset:-60px;
+      background:
+        radial-gradient(520px 280px at 20% 10%, rgba(255,94,168,.18), transparent 60%),
+        radial-gradient(520px 280px at 80% 20%, rgba(67,255,209,.12), transparent 60%),
+        radial-gradient(620px 340px at 50% 100%, rgba(255,211,106,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .photoSlot img{
+      width:100%;
+      display:block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      filter: saturate(1.06) contrast(1.03);
+      transform: translateZ(0);
+    }
+    .photoCaption{
+      position:absolute;left:12px;right:12px;bottom:12px;
+      display:flex;gap:10px;flex-wrap:wrap;
+    }
+    .tapGlow{
+      box-shadow: 0 0 70px rgba(255,94,168,.38), 0 24px 80px rgba(0,0,0,.35) !important;
+    }
+
+    /* ====== Lightbox ====== */
+    .lightboxBack{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.74);
+      display:none;
+      z-index:120;
+      padding:18px;
+      backdrop-filter: blur(6px);
+    }
+    .lightbox{
+      max-width:980px;
+      margin:5vh auto;
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.20);
+      background:rgba(20,20,35,.75);
+      box-shadow: 0 30px 120px rgba(0,0,0,.65);
+    }
+    .lightbox img{ width:100%; display:block; height:auto; }
+    .lightboxTop{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.14);
+    }
+
+    /* ====== Envelope ====== */
+    .envelopeWrap{
+      border:1px solid rgba(255,211,106,.32);
+      background:linear-gradient(135deg, rgba(255,211,106,.10), rgba(255,255,255,.04));
+      border-radius:18px;
+      padding:12px;
+    }
+    .envelopeBtn{
+      width:100%;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      font-weight:950;
+    }
+    .lockedHint{margin-top:10px;color:var(--muted);font-size:13px}
+    .valentineLetter{
+      display:none;
+      margin-top:12px;
+      border-radius:18px;
+      border:1px solid rgba(255,94,168,.35);
+      background: linear-gradient(135deg, rgba(255,94,168,.16), rgba(255,255,255,.04));
+      padding:12px;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    /* ====== Accordion ====== */
+    .accordion{display:grid;gap:10px;margin-top:10px}
+    details{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);border-radius:16px;padding:10px 12px;}
+    summary{cursor:pointer;font-weight:950;list-style:none;display:flex;justify-content:space-between;gap:10px;}
+    summary::-webkit-details-marker{display:none}
+    .note{margin:10px 0 0;color:var(--muted);line-height:1.6}
+    .note strong{color:var(--text)}
+
+    /* ====== Timeline ====== */
+    .timeline{display:grid;gap:10px;margin-top:10px}
+    .titem{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      border-radius:16px;
+      padding:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+    }
+    .tleft{display:flex;flex-direction:column;gap:4px}
+    .tdate{font-weight:950}
+    .tdesc{color:var(--muted);font-size:13px}
+    .badge{
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    /* ====== Meter / sliders ====== */
+    .meter{margin-top:10px;padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);}
+    input[type="range"]{width:100%}
+
+    /* ====== Game ====== */
+    canvas#game{width:100%;height:240px;border-radius:18px;border:1px solid rgba(255,255,255,.14);background: rgba(0,0,0,.18);}
+
+    /* ====== Toast ====== */
+    .toast{
+      position:fixed;left:50%;bottom:16px;transform:translateX(-50%);
+      background:rgba(20,20,30,.88);border:1px solid rgba(255,255,255,.18);
+      color:var(--text);padding:10px 12px;border-radius:999px;
+      z-index:200;backdrop-filter: blur(12px);display:none;
+      max-width: 94vw;text-align:center;box-shadow:0 16px 50px rgba(0,0,0,.35);
+    }
+
+    /* ====== Modal (Contract) ====== */
+    .modalBack{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      z-index:180;
+      padding:18px;
+      backdrop-filter: blur(6px);
+    }
+    .modal{
+      max-width:860px;
+      margin:4vh auto;
+      background:rgba(25,25,45,.78);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:24px;
+      box-shadow:0 30px 90px rgba(0,0,0,.55);
+      backdrop-filter: blur(16px);
+      overflow:hidden;
+      position:relative;
+      transform: translateZ(0);
+    }
+    .modal::after{
+      content:"";
+      position:absolute; inset:-60px;
+      background:
+        radial-gradient(520px 320px at 20% 10%, rgba(255,94,168,.20), transparent 60%),
+        radial-gradient(520px 320px at 80% 20%, rgba(67,255,209,.14), transparent 60%),
+        radial-gradient(620px 380px at 40% 100%, rgba(255,211,106,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .modalHeader{
+      padding:16px 16px 10px;
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+      position:relative; z-index:1;
+    }
+    .modalTitle{margin:0; font-size:20px; font-weight:1000; letter-spacing:-.01em}
+    .modalBody{padding:0 16px 16px; position:relative; z-index:1;}
+    .closeBtn{padding:8px 12px;border-radius:999px}
+
+    .contractPaper{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      border-radius:18px;
+      padding:14px;
+    }
+    .contractPaper h4{margin:0 0 8px; font-size:16px}
+    .contractPaper ol{margin:8px 0 0 18px; color:var(--muted); line-height:1.55}
+    .signWrap{
+      margin-top:12px;
+      border-top:1px dashed rgba(255,255,255,.16);
+      padding-top:12px;
+      display:grid;
+      gap:10px;
+    }
+    canvas#signCanvas{
+      width:100%;
+      height:180px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.18);
+      touch-action:none;
+    }
+    .successBadge{
+      display:none;
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:18px;
+      border:1px solid rgba(67,255,209,.32);
+      background:linear-gradient(135deg, rgba(67,255,209,.14), rgba(255,255,255,.04));
+      color:var(--text);
+      font-weight:950;
+    }
+
+    /* ====== Valentine banner ====== */
+    #valentineBanner{
+      display:none;
+      margin:16px 0 0;
+      padding:14px;
+      text-align:center;
+      border-radius:18px;
+      border:1px solid rgba(255,94,168,.45);
+      background:linear-gradient(135deg, rgba(255,94,168,.22), rgba(255,61,127,.10));
+      font-weight:1000;
+      letter-spacing:.2px;
+      box-shadow:0 18px 70px rgba(255,94,168,.10);
+    }
+    #valentineBanner span{font-weight:650; opacity:.9}
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center;}
+
+    /* ====== Music player ====== */
+    .player{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      border-radius:18px;
+      padding:12px;
+      display:grid;
+      gap:10px;
+    }
+    .playerTop{
+      display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+    .volRow{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+    .volRow input[type="range"]{width:140px}
+    .nowPlaying{color:var(--muted); font-size:13px}
+    .musicBtns{display:flex; gap:10px; flex-wrap:wrap;}
+    .musicBtns button{flex:1 1 140px}
+  </style>
+</head>
+
+<body>
+  <div class="glow" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <div class="float-layer" id="floatLayer" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="pill-row">
+          <span class="pill">🗼 Japan → Mumbai</span>
+          <span class="pill" id="daysToValPill">💘 Days to Valentine: —</span>
+          <span class="pill" id="todayPill">📅 Today: —</span>
+        </div>
+
+        <h1 class="title">Kastu, you’re my favorite person 💖</h1>
+        <p class="subtitle" id="subtitleLine">
+          Two days left. So I made you a tiny love-website from Japan — cute, funny, and extremely serious about you.
+        </p>
+      </div>
+
+      <div class="actions">
+        <button class="primary" id="confettiBtn">💥 Hug + confetti</button>
+        <button class="mint" id="musicToggle">🎵 Music ON/OFF</button>
+        <button class="ghost" id="copyBtn">🔗 Copy share message</button>
+        <button class="primary" id="openContract">📝 Valentine Contract</button>
+      </div>
+    </header>
+
+    <div id="valentineBanner">
+      🌹 Happy Valentine’s Day, Kastu 🌹<br/>
+      <span>No distance today. Just love. (And yes, extra hugs.)</span>
+    </div>
+
+    <div class="grid">
+      <!-- LEFT -->
+      <section class="card">
+        <div class="row">
+          <div class="big-heart"><span>💗</span></div>
+          <div>
+            <div class="chip">💌 For: <b>&nbsp;Kastu</b></div>
+            <div class="chip">🧑‍🔧 From: <b>&nbsp;Himanshu</b></div>
+            <p class="quote">
+              “If missing you burned calories, I’d be a fitness influencer by now.”<br/>
+              <span style="opacity:.9">— your Japan boyfriend, currently acting brave 😭</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="heroCount">
+          <div class="mini">Countdown is locked to Mumbai time (IST) so it feels like YOUR midnight.</div>
+          <div class="big" id="heroCountdown">—</div>
+          <div class="sub" id="heroSub">Secret letter unlocks on Feb 14 (Mumbai).</div>
+        </div>
+
+        <div class="kpi">
+          <div class="box">
+            <div class="label">Days since our first meet</div>
+            <div class="val" id="daysSinceFirstMeet">—</div>
+          </div>
+          <div class="box">
+            <div class="label">Time (Japan / Mumbai)</div>
+            <div class="val"><span id="timeJST">—</span> / <span id="timeIST">—</span></div>
+          </div>
+          <div class="box">
+            <div class="label">Status</div>
+            <div class="val" id="statusChip">—</div>
+          </div>
+        </div>
+
+        <!-- PHOTO -->
+        <div class="divider"></div>
+        <h3 style="margin:0 0 8px">Us (my favorite picture) 📸💗</h3>
+        <div class="photoSlot photoFloat" id="photoSlot" title="Tap to zoom 💗">
+          <!-- Put your photo in same folder as index.html and name it exactly: kastu.jpg -->
+          <img id="mainPhoto" src="kastu.jpg"
+               alt="Kastu & Himanshu"
+               loading="lazy"
+               onerror="this.src='https://via.placeholder.com/1200x750/171038/ffffff?text=Add+kastu.jpg+in+same+folder';" />
+          <div class="photoCaption" id="photoCaption">
+            <span class="chip" id="photoChip1">Mumbai ↔ Japan</span>
+            <span class="chip" id="photoChip2">2 days to go 😭</span>
+          </div>
+        </div>
+        <p class="mini" style="margin:10px 0 0">Tap to zoom. I miss this moment a lot.</p>
+
+        <!-- ENVELOPE -->
+        <div class="divider"></div>
+        <h3 style="margin:0 0 8px">🔒 The Valentine Envelope</h3>
+        <div class="envelopeWrap">
+          <button class="envelopeBtn gold" id="openEnvelope">💌 Open the secret letter</button>
+          <div class="lockedHint" id="envelopeHint">
+            Locked until it becomes <b>Feb 14 in Mumbai</b>. (No cheating, miss main character 😌)
+          </div>
+
+          <div class="valentineLetter" id="valentineLetter">
+            <div class="chip">🌹 Valentine Letter</div>
+            <p class="note" style="margin-top:10px">
+              Kastu… happy Valentine’s Day. 💗<br/><br/>
+              I don’t want a perfect love story. I want <b>our</b> story — real, funny, loyal, and forever.
+              You’re my peace and my favorite person to talk to.<br/><br/>
+              I’m proud of you. I trust you. I choose you — again and again.<br/><br/>
+              <b>Will you be my Valentine?</b> 💍✨
+            </p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+              <button class="primary" id="confettiLetter">💥 Celebrate us</button>
+              <button class="ghost" id="copyLetter">📩 Copy this letter</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="divider"></div>
+        <h3 style="margin:0 0 6px">Our timeline (the “how it started” series) 🥹</h3>
+        <div class="timeline" id="timeline"></div>
+
+        <!-- OPEN WHEN -->
+        <div class="divider"></div>
+        <h3 style="margin:0 0 6px">Open-When Notes 💌</h3>
+        <div class="accordion">
+          <details>
+            <summary>Open when you miss me <span>🥺</span></summary>
+            <p class="note">
+              Kastuuuu… come here 😭💗<br/>
+              Mumbai date plan: <strong>vada pav</strong> + <strong>waffles</strong> after.
+              And I’ll keep looking at you like “how did I get this lucky?”<br/><br/>
+              You’re not far. You’re just on the other side of my screen. Still in my heart full-time.
+            </p>
+          </details>
+
+          <details>
+            <summary>Open when you’re angry <span>😤</span></summary>
+            <p class="note">
+              Okay okay… I was wrong. ✅<br/>
+              Even if I was right, I was wrong. ✅✅<br/><br/>
+              Please accept: <strong>1 apology</strong> + <strong>2 compliments</strong> + <strong>unlimited hugs</strong>.<br/>
+              Also I’ll buy you pav bhaji. That’s legally binding.
+            </p>
+          </details>
+
+          <details>
+            <summary>Open when you want to laugh <span>😂</span></summary>
+            <p class="note">
+              I searched “how to stop missing my girlfriend”…<br/>
+              the internet said: <strong>“You can’t. She’s Kastu.”</strong><br/><br/>
+              So anyway I’m going to love you aggressively. 💗
+            </p>
+          </details>
+
+          <details>
+            <summary>Open on “confession day” <span>🫶</span></summary>
+            <p class="note">
+              Confession day: <strong>April 3</strong> — some feelings don’t need a year. 💞<br/><br/>
+              I chose you then, I choose you now, and I’ll keep choosing you — every day.
+            </p>
+          </details>
+        </div>
+
+        <!-- SECRET BOX -->
+        <div class="divider"></div>
+        <h3 style="margin:0 0 6px">🔒 Valentine Secret (auto-unlocks Feb 14 IST)</h3>
+        <div class="meter" id="secretBox" style="border:1px solid rgba(255,211,106,.32); background:linear-gradient(135deg, rgba(255,211,106,.10), rgba(255,255,255,.04));">
+          <div class="chip" id="secretLocked">🔒 Locked until Feb 14 (Mumbai time)</div>
+          <div class="chip" id="secret" style="display:none; padding:12px 12px; border-radius:18px; text-align:left; line-height:1.45;">
+            🌹 <b>Kastu, this is our Valentine.</b><br/>
+            No distance. No doubt. Just us — choosing each other.<br/><br/>
+            <b>Future us:</b> airport hug, pav bhaji dates, waffles, and the calm feeling of “we made it.” 💗
+          </div>
+          <div class="mini" id="secretHint" style="margin-top:10px">Come back at midnight 😌</div>
+        </div>
+      </section>
+
+      <!-- RIGHT -->
+      <aside class="card">
+        <h3 style="margin:0 0 8px">Show Theme Player 🎬🎧</h3>
+        <div class="player">
+          <div class="playerTop">
+            <div class="nowPlaying" id="nowPlaying">Now playing: <b>—</b></div>
+            <span class="chip" id="audioStatus">Audio: off</span>
+          </div>
+
+          <div class="musicBtns">
+            <button class="primary" id="playSaul">📞 Better Call Saul vibe</button>
+            <button class="primary" id="playBB">🧪 Breaking Bad vibe</button>
+            <button class="primary" id="playFriends">☕ Friends vibe</button>
+          </div>
+
+          <div class="volRow">
+            <span class="chip">Volume</span>
+            <input id="vol" type="range" min="0" max="100" value="45">
+            <button class="ghost" id="stopMusic">⏹ Stop</button>
+          </div>
+
+          <div class="mini">
+            ✅ If you add MP3 files in the same folder, it will play them.<br/>
+            Put these files next to <b>index.html</b>:<br/>
+            <b>saul.mp3</b>, <b>breakingbad.mp3</b>, <b>friends.mp3</b><br/>
+            (If missing, it plays a cute built-in synth instead.)
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3 style="margin:0 0 8px">Two-day mission 🧭</h3>
+        <div class="meter">
+          <div class="mini">Until Feb 14, I’m doing this daily:</div>
+          <div class="divider" style="margin:10px 0"></div>
+          <div class="mini">✅ 1 good morning text</div>
+          <div class="mini">✅ 1 “I’m proud of you” line</div>
+          <div class="mini">✅ 1 meme (minimum)</div>
+          <div class="mini">✅ 1 short call / voice note</div>
+          <div class="mini">✅ 1 plan for our next Mumbai date</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3 style="margin:0 0 8px">Mini Game: Catch Hearts 💘</h3>
+        <p class="mini" style="margin:0 0 8px">
+          Tap hearts to collect love points. Reach <b>20</b> to unlock a game secret.
+        </p>
+        <div style="display:grid; gap:10px;">
+          <canvas id="game" width="900" height="420"></canvas>
+          <div class="row" style="justify-content:space-between">
+            <span class="chip">Score: <b id="score">0</b></span>
+            <button class="ghost" id="resetGame">↻ Reset</button>
+          </div>
+          <div class="chip" id="gameSecret" style="display:none; justify-content:center; text-align:center; padding:10px 12px;">
+            🔓 Game secret: <b>&nbsp;“Airport → hug → no letting go.”</b>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3 style="margin:0 0 8px">Food love language 🍽️</h3>
+        <div class="meter">
+          <div class="mini">Kastu’s favorite combo (official):</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+            <span class="chip">🥘 Pav Bhaji</span>
+            <span class="chip">🍔 Vada Pav</span>
+            <span class="chip">🧇 Waffles</span>
+          </div>
+          <div class="mini" style="margin-top:10px">
+            My plan: I eat less, you eat more. That’s the rule. ✅
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3 style="margin:0 0 8px">One-Tap Love Button</h3>
+        <p class="mini" style="margin:0 0 10px">Press when you want a quick “aww”.</p>
+        <button class="primary" id="loveBtn" style="width:100%; padding:12px 14px;">💗 Send “I love you” ping</button>
+
+      </aside>
+    </div>
+
+    <p class="footer">
+      ✅ Save as <b>index.html</b> and put your photo as <b>kastu.jpg</b> in the same folder. <br/>
+      🎧 Optional: add <b>saul.mp3</b>, <b>breakingbad.mp3</b>, <b>friends.mp3</b> in the same folder. <br/>
+      The secret letter unlocks automatically on <b>Feb 14 (Mumbai time)</b>.
+    </p>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightboxBack" id="lightboxBack" aria-hidden="true">
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo Zoom">
+      <div class="lightboxTop">
+        <div class="mini">Our photo 💗</div>
+        <button class="ghost" id="closeLightbox">✖</button>
+      </div>
+      <img id="lightboxImg" src="kastu.jpg" alt="Zoomed photo" />
+    </div>
+  </div>
+
+  <!-- CONTRACT MODAL -->
+  <div class="modalBack" id="modalBack" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Valentine Contract">
+      <div class="modalHeader">
+        <div>
+          <h2 class="modalTitle">📝 The Official Kastu x Himanshu Valentine Contract</h2>
+          <div class="mini">Valid across Japan ↔ Mumbai. Renewable forever. Punishments: extra hugs.</div>
+        </div>
+        <button class="ghost closeBtn" id="closeModal">✖</button>
+      </div>
+      <div class="modalBody">
+        <div class="contractPaper">
+          <h4>Terms & Conditions (written with love)</h4>
+          <ol>
+            <li>Kastu remains the cutest human alive. (Non-negotiable.)</li>
+            <li>Himanshu must provide: comfort, jokes, respect, loyalty, and “I’m proud of you” reminders.</li>
+            <li>When Kastu is angry: apology + snack offering + no ego.</li>
+            <li>When Kastu is sad: video call + patience + “we’ll get through it” energy.</li>
+            <li>When Kastu is happy: celebrate her like she won an award.</li>
+            <li>Dates must include at least 1 pav bhaji OR vada pav OR waffles per Mumbai visit.</li>
+            <li>Long distance rule: distance can’t reduce love. Only increases missing.</li>
+            <li>Bonus clause: Friends Mode allowed anytime. Coffee optional. Love mandatory.</li>
+          </ol>
+
+          <div class="signWrap">
+            <div style="display:grid; gap:10px">
+              <div class="mini">Kastu’s signature (draw here ✍️)</div>
+              <canvas id="signCanvas" width="900" height="320"></canvas>
+              <div style="display:flex; gap:10px; flex-wrap:wrap">
+                <button class="ghost" id="clearSign">🧽 Clear</button>
+                <button class="primary" id="acceptContract">✅ Sign & Accept</button>
+              </div>
+            </div>
+
+            <div class="meter" style="margin-top:10px">
+              <div class="chip">Seal: <b>&nbsp;100% Loyal ✅</b></div>
+              <div class="chip" style="margin-top:8px">Date (Mumbai): <b id="contractDate">&nbsp;—</b></div>
+              <div class="chip" style="margin-top:8px">Witness: <b>&nbsp;The Local Train playlist 🎧</b></div>
+              <div class="divider" style="margin:12px 0"></div>
+              <div class="mini" id="contractLine">Sign it to unlock a “future us” message 😏</div>
+
+              <div class="successBadge" id="contractSuccess">
+                ✅ CONTRACT SIGNED. <br/>
+                🔓 Future message unlocked: <span id="futureMsg"></span>
+              </div>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+                <button class="ghost" id="copyContract">📩 Copy contract message</button>
+                <button class="mint" id="confettiContract">💥 Celebrate</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio elements (optional local mp3s) -->
+  <audio id="audSaul" src="saul.mp3" preload="auto"></audio>
+  <audio id="audBB" src="breakingbad.mp3" preload="auto"></audio>
+  <audio id="audFriends" src="friends.mp3" preload="auto"></audio>
+
+  <script>
+    // ==========================================
+    // SAVE AS: index.html
+    // Put in SAME folder:
+    //  - kastu.jpg
+    // Optional music:
+    //  - saul.mp3
+    //  - breakingbad.mp3
+    //  - friends.mp3
+    // ==========================================
+
+    const $ = (id) => document.getElementById(id);
+
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.style.display = "block";
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(()=> t.style.display="none", 2600);
+    }
+
+    // ===== Floating hearts (smart count) =====
+    (function spawnHearts(){
+      const layer = $("floatLayer");
+      const isMobile = window.innerWidth < 768;
+      const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const count = prefersReduce ? 0 : (isMobile ? 14 : 24);
+
+      for(let i=0;i<count;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        const left = Math.random()*100;
+        const size = 10 + Math.random()*20;
+        const dur = 9 + Math.random()*10;
+        const delay = Math.random()*10;
+        const dx = (Math.random()*2-1)*80 + "px";
+        h.style.left = left + "vw";
+        h.style.width = size + "px";
+        h.style.height = size + "px";
+        h.style.animationDuration = dur + "s";
+        h.style.animationDelay = delay + "s";
+        h.style.setProperty("--dx", dx);
+        h.style.opacity = 0.18 + Math.random()*0.65;
+        layer.appendChild(h);
+      }
+    })();
+
+    // ===== Confetti burst =====
+    function burst(){
+      const n = 30;
+      for(let i=0;i<n;i++){
+        const s = document.createElement("div");
+        s.textContent = ["💖","✨","🌹","💗","💞","🍫","🧸","🧇","🍔","🥘","☕","🫶"][Math.floor(Math.random()*12)];
+        s.style.position="fixed";
+        s.style.left = (Math.random()*100)+"vw";
+        s.style.top = "-10px";
+        s.style.fontSize = (16+Math.random()*18)+"px";
+        s.style.zIndex = 250;
+        s.style.pointerEvents="none";
+        s.style.transition="transform 1.8s ease, opacity 1.8s ease";
+        document.body.appendChild(s);
+        requestAnimationFrame(()=>{
+          s.style.transform = `translateY(${110+Math.random()*20}vh) rotate(${(Math.random()*2-1)*240}deg)`;
+          s.style.opacity = 0;
+        });
+        setTimeout(()=> s.remove(), 1900);
+      }
+    }
+
+    // ===== IST helper =====
+    function nowIST(){
+      return new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    }
+
+    // ===== Story dates =====
+    const firstMeet = new Date("2024-09-28T12:00:00+05:30");
+    const meets = [
+      { d: "2024-09-28", title: "First meet", note: "the day my brain said: ‘oh… it’s her.’" },
+      { d: "2024-09-30", title: "Second meet", note: "proof that destiny likes sequels" },
+      { d: "2024-10-11", title: "Third meet", note: "I started missing you even while you were there" },
+      { d: "2024-12-29", title: "Meet again", note: "my favorite ‘finally’ moment" },
+      { d: "2025-01-01", title: "2025 together", note: "new year, same us (even better)" },
+      { d: "2026-01-13", title: "Latest meet", note: "my heart: refreshed ✅" },
+    ];
+
+    function fmtDatePretty(iso){
+      const dt = new Date(iso + "T12:00:00+05:30");
+      return new Intl.DateTimeFormat("en-IN", { dateStyle:"medium", timeZone:"Asia/Kolkata" }).format(dt);
+    }
+    function daysBetween(a,b){
+      const ms = b - a;
+      return Math.floor(ms / (1000*60*60*24));
+    }
+
+    // ===== Target Valentine midnight IST =====
+    const valentines = new Date("2026-02-14T00:00:00+05:30");
+
+    // ===== Times display =====
+    function fmtTime(tz){
+      return new Intl.DateTimeFormat("en-IN", {
+        hour:"2-digit", minute:"2-digit", second:"2-digit",
+        hour12:true, timeZone: tz
+      }).format(new Date());
+    }
+
+    function updateTimes(){
+      $("timeJST").textContent = fmtTime("Asia/Tokyo");
+      $("timeIST").textContent = fmtTime("Asia/Kolkata");
+      const todayTokyo = new Intl.DateTimeFormat("en-IN", { dateStyle:"full", timeZone:"Asia/Tokyo" }).format(new Date());
+      $("todayPill").textContent = "📅 Today: " + todayTokyo;
+
+      const d = daysBetween(firstMeet, new Date());
+      $("daysSinceFirstMeet").textContent = (d >= 0 ? d : 0) + " days";
+    }
+
+    // ===== Timeline render =====
+    (function renderTimeline(){
+      const host = $("timeline");
+      host.innerHTML = "";
+      meets.forEach((m, idx) => {
+        const el = document.createElement("div");
+        el.className = "titem";
+        const left = document.createElement("div");
+        left.className = "tleft";
+
+        const date = document.createElement("div");
+        date.className = "tdate";
+        date.textContent = fmtDatePretty(m.d);
+
+        const desc = document.createElement("div");
+        desc.className = "tdesc";
+        desc.textContent = m.title + " — " + m.note;
+
+        left.appendChild(date);
+        left.appendChild(desc);
+
+        const badge = document.createElement("div");
+        badge.className = "badge";
+        badge.textContent = `chapter ${idx+1}`;
+
+        el.appendChild(left);
+        el.appendChild(badge);
+        host.appendChild(el);
+      });
+
+      const foot = document.createElement("div");
+      foot.className = "titem";
+      const l2 = document.createElement("div");
+      l2.className = "tleft";
+      const d2 = document.createElement("div");
+      d2.className = "tdate";
+      d2.textContent = "Confession day 💞";
+      const s2 = document.createElement("div");
+      s2.className = "tdesc";
+      s2.textContent = "April 3 — some feelings don’t need a year. (Love confirmed anyway.)";
+      l2.appendChild(d2); l2.appendChild(s2);
+      const b2 = document.createElement("div");
+      b2.className = "badge";
+      b2.textContent = "core memory";
+      foot.appendChild(l2); foot.appendChild(b2);
+      host.appendChild(foot);
+    })();
+
+    // ===== Unlock logic =====
+    function unlockValentineEverything(){
+      $("valentineBanner").style.display = "block";
+
+      $("secretLocked").style.display = "none";
+      $("secret").style.display = "inline-flex";
+      $("secret").style.animation = "fadeIn 1.2s ease forwards";
+      $("secretHint").textContent = "Unlocked 🌹";
+
+      $("envelopeHint").textContent = "Unlocked 🌹 Open it!";
+      $("openEnvelope").classList.add("primary");
+
+      $("photoChip1").textContent = "Happy Valentine’s Day 🌹";
+      $("photoChip2").textContent = "I love you, Kastu 💗";
+
+      $("statusChip").textContent = "VALENTINE MODE 🌹";
+
+      burst();
+      toast("🌹 Valentine Mode unlocked (Mumbai time)!");
+    }
+
+    function isUnlockedIST(){
+      return nowIST() >= valentines;
+    }
+
+    function updateCountdown(){
+      const nIST = nowIST();
+      const diff = valentines - nIST;
+
+      if(diff <= 0){
+        $("heroCountdown").textContent = "Happy Valentine’s Day 💖";
+        $("heroSub").textContent = "Open the envelope. It’s waiting for you 🌹";
+        $("daysToValPill").textContent = "💘 Valentine’s Day is here";
+        if($("statusChip").textContent !== "VALENTINE MODE 🌹") unlockValentineEverything();
+        return;
+      }
+
+      const s = Math.floor(diff / 1000);
+      const days = Math.floor(s / 86400);
+      const hrs = Math.floor((s % 86400) / 3600);
+      const mins = Math.floor((s % 3600) / 60);
+      const secs = s % 60;
+
+      $("heroCountdown").textContent = `${days}d ${hrs}h ${mins}m ${secs}s`;
+      $("heroSub").textContent = "Secret letter unlocks at Feb 14, 12:00 AM (Mumbai).";
+      $("daysToValPill").textContent = `💘 ${days} days to Valentine`;
+      $("statusChip").textContent = days <= 2 ? "2 DAYS LEFT 😭" : "COUNTDOWN ON ⏳";
+
+      $("valentineBanner").style.display = "none";
+      $("secret").style.display = "none";
+      $("secretLocked").style.display = "inline-flex";
+    }
+
+    function updateDynamicText(daysLeft){
+      if(daysLeft <= 0) return;
+      const line = daysLeft === 1 ? "1 day left" : `${daysLeft} days left`;
+      $("photoChip2").textContent = `${line} 😭`;
+      $("subtitleLine").textContent = `${line}. So I made you a tiny love-website from Japan — cute, funny, and extremely serious about you.`;
+    }
+
+    // ===== Buttons =====
+    $("confettiBtn").addEventListener("click", ()=>{ burst(); toast("🤗 Virtual hug delivered to Kastu!"); });
+
+    $("copyBtn").addEventListener("click", async ()=>{
+      const msg = `Kastu 💖 I made a tiny website for you for Valentine’s 😭🌹
+Open it on your phone!
+
+— Your Japan boyfriend, Himanshu`;
+      try{ await navigator.clipboard.writeText(msg); toast("✅ Share message copied!"); }
+      catch{ toast("Copy failed 😅"); }
+    });
+
+    $("loveBtn").addEventListener("click", ()=>{ burst(); toast("💗 Ping sent: ‘I love you, Kastu.’"); });
+
+    // ===== Envelope open =====
+    $("openEnvelope").addEventListener("click", ()=>{
+      if(!isUnlockedIST()){
+        burst();
+        toast("🔒 Not yet 😭 It opens on Feb 14 (Mumbai time).");
+        return;
+      }
+      $("valentineLetter").style.display = "block";
+      $("valentineLetter").scrollIntoView({behavior:"smooth", block:"center"});
+      burst();
+      toast("💌 Letter opened!");
+    });
+
+    $("confettiLetter").addEventListener("click", ()=>{ burst(); toast("💥 Celebrating you two 💗"); });
+
+    $("copyLetter").addEventListener("click", async ()=>{
+      const txt = `Kastu… happy Valentine’s Day 💗
+I don’t want a perfect love story. I want our story — real, funny, loyal, and forever.
+I’m proud of you. I trust you. I choose you — again and again.
+Will you be my Valentine? 💍✨
+— Himanshu`;
+      try{ await navigator.clipboard.writeText(txt); toast("✅ Letter copied!"); }
+      catch{ toast("Copy failed 😅"); }
+    });
+
+    // ===== Photo lightbox + premium tap glow =====
+    const lightboxBack = $("lightboxBack");
+    const lightboxImg = $("lightboxImg");
+    $("photoSlot").addEventListener("click", ()=>{
+      const slot = $("photoSlot");
+      slot.classList.add("tapGlow");
+      setTimeout(()=> slot.classList.remove("tapGlow"), 650);
+
+      lightboxImg.src = $("mainPhoto").src;
+      lightboxBack.style.display = "block";
+      lightboxBack.setAttribute("aria-hidden","false");
+      burst();
+      toast("📸 Zoom mode 💗");
+    });
+    $("closeLightbox").addEventListener("click", ()=>{
+      lightboxBack.style.display = "none";
+      lightboxBack.setAttribute("aria-hidden","true");
+    });
+    lightboxBack.addEventListener("click", (e)=>{
+      if(e.target === lightboxBack){
+        lightboxBack.style.display = "none";
+        lightboxBack.setAttribute("aria-hidden","true");
+      }
+    });
+
+    // ===== Modal (Contract) =====
+    const modalBack = $("modalBack");
+    function openModal(){
+      modalBack.style.display = "block";
+      modalBack.setAttribute("aria-hidden","false");
+      const dt = new Intl.DateTimeFormat("en-IN", { dateStyle:"full", timeZone:"Asia/Kolkata" }).format(nowIST());
+      $("contractDate").textContent = dt;
+      setTimeout(resizeSignCanvas, 80);
+      toast("📝 Contract opened. Kastu, please sign ✍️");
+    }
+    function closeModal(){
+      modalBack.style.display = "none";
+      modalBack.setAttribute("aria-hidden","true");
+    }
+    $("openContract").addEventListener("click", openModal);
+    $("closeModal").addEventListener("click", closeModal);
+    modalBack.addEventListener("click", (e)=>{ if(e.target === modalBack) closeModal(); });
+
+    // ESC closes modal/lightbox
+    window.addEventListener("keydown", (e)=>{
+      if(e.key === "Escape"){
+        if(modalBack.style.display==="block") closeModal();
+        if(lightboxBack.style.display==="block"){
+          lightboxBack.style.display="none";
+          lightboxBack.setAttribute("aria-hidden","true");
+        }
+      }
+    });
+
+    // ===== Signature canvas =====
+    const sign = $("signCanvas");
+    const sctx = sign.getContext("2d");
+    let drawing = false;
+    let hasInk = false;
+
+    function resizeSignCanvas(){
+      const rect = sign.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      sign.width = Math.floor(rect.width * dpr);
+      sign.height = Math.floor(rect.height * dpr);
+      sctx.setTransform(dpr,0,0,dpr,0,0);
+
+      sctx.clearRect(0,0,rect.width,rect.height);
+      sctx.fillStyle = "rgba(255,255,255,.06)";
+      sctx.fillRect(0,0,rect.width,rect.height);
+      sctx.strokeStyle = "rgba(255,255,255,.16)";
+      sctx.setLineDash([6,6]);
+      sctx.beginPath();
+      sctx.moveTo(14, rect.height-28);
+      sctx.lineTo(rect.width-14, rect.height-28);
+      sctx.stroke();
+      sctx.setLineDash([]);
+      sctx.fillStyle = "rgba(255,255,255,.55)";
+      sctx.font = "14px system-ui, -apple-system, Segoe UI, Roboto";
+      sctx.fillText("Sign here, Kastu ✍️", 16, rect.height-36);
+
+      sctx.strokeStyle = "rgba(255,94,168,.85)";
+      sctx.lineWidth = 3.2;
+      sctx.lineCap = "round";
+      sctx.lineJoin = "round";
+    }
+    function getPos(e){
+      const rect = sign.getBoundingClientRect();
+      return {x:(e.clientX-rect.left), y:(e.clientY-rect.top)};
+    }
+    function startDraw(e){
+      drawing = true;
+      hasInk = true;
+      const p = getPos(e);
+      sctx.beginPath();
+      sctx.moveTo(p.x, p.y);
+      e.preventDefault();
+    }
+    function draw(e){
+      if(!drawing) return;
+      const p = getPos(e);
+      sctx.lineTo(p.x, p.y);
+      sctx.stroke();
+      e.preventDefault();
+    }
+    function endDraw(){ drawing = false; }
+
+    sign.addEventListener("pointerdown", startDraw);
+    sign.addEventListener("pointermove", draw);
+    sign.addEventListener("pointerup", endDraw);
+    sign.addEventListener("pointercancel", endDraw);
+    sign.addEventListener("pointerleave", endDraw);
+
+    $("clearSign").addEventListener("click", ()=>{
+      resizeSignCanvas();
+      hasInk = false;
+      toast("🧽 Cleared. Sign again ✍️");
+    });
+
+    const futureMsgs = [
+      "“We’re not long distance anymore. You’re right here. And yes, I still miss you even when you’re beside me.”",
+      "“We’re doing pav bhaji dates like it’s a hobby. You laugh. I fall in love again. Repeat.”",
+      "“Mumbai ↔ Japan trips, selfies, and the calm feeling of ‘we made it’.”",
+      "“We rewatch Friends and argue about the best character… then cuddle anyway.”"
+    ];
+
+    $("acceptContract").addEventListener("click", ()=>{
+      if(!hasInk){
+        toast("✍️ Sign first (tiny scribble also valid) 😭");
+        $("contractLine").textContent = "Please sign first 😭 (tiny scribble is also valid)";
+        return;
+      }
+      burst();
+      $("contractSuccess").style.display = "block";
+      $("futureMsg").textContent = futureMsgs[Math.floor(Math.random()*futureMsgs.length)];
+      $("contractLine").textContent = "✅ Signed and sealed. This contract is now forever.";
+      toast("✅ CONTRACT SIGNED!");
+    });
+
+    $("confettiContract").addEventListener("click", ()=>{ burst(); toast("💥 Celebrating you two 💗"); });
+
+    $("copyContract").addEventListener("click", async ()=>{
+      const txt =
+`📝 Kastu x Himanshu Valentine Contract ✅
+- Valid across Japan ↔ Mumbai
+- Snacks clause: pav bhaji / vada pav / waffles mandatory
+- Love clause: forever
+
+Signed with love 💖`;
+      try{ await navigator.clipboard.writeText(txt); toast("✅ Contract message copied!"); }
+      catch{ toast("Copy failed 😅"); }
+    });
+
+    // ===== Mini game =====
+    const canvas = $("game");
+    const c = canvas.getContext("2d");
+    const W = canvas.width, H = canvas.height;
+    let hearts = [];
+    let score = 0;
+
+    function rnd(a,b){ return a + Math.random()*(b-a); }
+    function spawnHeart(){
+      hearts.push({
+        x: rnd(40, W-40),
+        y: H + rnd(20,140),
+        r: rnd(16, 28),
+        vy: rnd(1.2, 2.9),
+        vx: rnd(-0.6, 0.6),
+        picked:false
+      });
+    }
+    for(let i=0;i<7;i++) spawnHeart();
+
+    function drawHeart(x,y,r){
+      c.save();
+      c.translate(x,y);
+      c.rotate(0.12);
+      c.fillStyle = "rgba(255,94,168,.80)";
+      c.beginPath();
+      const s = r;
+      c.moveTo(0, s*0.25);
+      c.bezierCurveTo(0, -s*0.4, -s, -s*0.2, -s, s*0.35);
+      c.bezierCurveTo(-s, s*0.9, 0, s*1.05, 0, s*1.35);
+      c.bezierCurveTo(0, s*1.05, s, s*0.9, s, s*0.35);
+      c.bezierCurveTo(s, -s*0.2, 0, -s*0.4, 0, s*0.25);
+      c.closePath();
+      c.shadowColor = "rgba(0,0,0,.25)";
+      c.shadowBlur = 14;
+      c.fill();
+      c.restore();
+    }
+
+    function loop(){
+      c.clearRect(0,0,W,H);
+
+      const g = c.createRadialGradient(W*0.3, H*0.2, 20, W*0.5, H*0.5, H);
+      g.addColorStop(0, "rgba(255,94,168,.14)");
+      g.addColorStop(1, "rgba(0,0,0,.0)");
+      c.fillStyle = g;
+      c.fillRect(0,0,W,H);
+
+      if(hearts.length < 11 && Math.random() < 0.07) spawnHeart();
+
+      hearts.forEach(h=>{
+        h.y -= h.vy;
+        h.x += h.vx;
+        drawHeart(h.x, h.y, h.r);
+      });
+
+      hearts = hearts.filter(h => h.y > -90 && !h.picked);
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    function hitTest(mx,my,h){
+      const dx = mx - h.x;
+      const dy = my - h.y;
+      return Math.sqrt(dx*dx + dy*dy) <= h.r*1.2;
+    }
+    function pointerToCanvas(e){
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+      return {x,y};
+    }
+    canvas.addEventListener("pointerdown", (e)=>{
+      const p = pointerToCanvas(e);
+      for(const h of hearts){
+        if(hitTest(p.x,p.y,h)){
+          h.picked = true;
+          score += 1;
+          $("score").textContent = score;
+          burst();
+          if(score >= 20) $("gameSecret").style.display = "inline-flex";
+          break;
+        }
+      }
+    });
+    $("resetGame").addEventListener("click", ()=>{
+      score = 0;
+      $("score").textContent = "0";
+      $("gameSecret").style.display = "none";
+      hearts = [];
+      for(let i=0;i<7;i++) spawnHeart();
+      toast("Game reset 💘 Catch again!");
+    });
+
+    // ====== Music system (local mp3 OR synth fallback) ======
+    const audSaul = $("audSaul");
+    const audBB = $("audBB");
+    const audFriends = $("audFriends");
+    const nowPlaying = $("nowPlaying");
+    const audioStatus = $("audioStatus");
+    const vol = $("vol");
+
+    let audioOn = false;
+    let currentAudio = null;
+
+    // WebAudio fallback synth
+    let ctx = null, osc = null, gain = null, synthTimer = null;
+
+    function setVolume(v){
+      const x = Math.max(0, Math.min(1, v/100));
+      [audSaul, audBB, audFriends].forEach(a => a.volume = x);
+      if(gain) gain.gain.value = x * 0.12; // synth smaller
+    }
+    setVolume(+vol.value);
+    vol.addEventListener("input", (e)=> setVolume(+e.target.value));
+
+    function stopAllAudio(){
+      [audSaul, audBB, audFriends].forEach(a => { a.pause(); a.currentTime = 0; });
+      currentAudio = null;
+
+      if(synthTimer){ clearInterval(synthTimer); synthTimer = null; }
+      if(osc){
+        try{ osc.stop(); }catch{}
+        osc = null;
+      }
+      if(ctx){
+        try{ ctx.close(); }catch{}
+        ctx = null;
+      }
+      audioStatus.textContent = "Audio: off";
+      nowPlaying.innerHTML = `Now playing: <b>—</b>`;
+    }
+
+    function canPlayAudioElement(aud){
+      // If file missing, the audio element will error on play.
+      return new Promise((resolve)=>{
+        let settled = false;
+        const ok = ()=>{ if(settled) return; settled = true; cleanup(); resolve(true); };
+        const bad = ()=>{ if(settled) return; settled = true; cleanup(); resolve(false); };
+        const cleanup = ()=>{
+          aud.removeEventListener("canplay", ok);
+          aud.removeEventListener("error", bad);
+        };
+        aud.addEventListener("canplay", ok, {once:true});
+        aud.addEventListener("error", bad, {once:true});
+
+        // Trigger load attempt
+        aud.load();
+        // If already cached, canplay may fire quickly
+        setTimeout(()=>{ if(!settled) bad(); }, 900);
+      });
+    }
+
+    function startSynth(preset){
+      // NOT the real themes — just a “vibe” synth so it feels alive.
+      // Works even without mp3.
+      try{
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        osc = ctx.createOscillator();
+        gain = ctx.createGain();
+        osc.type = preset.type;
+        gain.gain.value = 0.0001;
+        osc.connect(gain).connect(ctx.destination);
+        osc.start();
+
+        setVolume(+vol.value);
+
+        const patterns = {
+          saul: { notes:[196, 220, 247, 220, 196, 165, 196, 220], speed: 260 },
+          bb:   { notes:[110, 147, 165, 147, 110, 98, 110, 147], speed: 300 },
+          friends: { notes:[523.25, 659.25, 783.99, 659.25, 587.33, 523.25], speed: 240 }
+        };
+        const p = patterns[preset.name];
+        let i = 0;
+
+        synthTimer = setInterval(()=>{
+          if(!audioOn || !osc) return;
+          const f = p.notes[i % p.notes.length];
+          osc.frequency.setValueAtTime(f, ctx.currentTime);
+          gain.gain.setTargetAtTime((+vol.value/100)*0.12, ctx.currentTime, 0.02);
+          setTimeout(()=>{
+            if(!gain) return;
+            gain.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.05);
+          }, 120);
+          i++;
+        }, p.speed);
+
+      }catch{
+        toast("Audio blocked 😅 Tap again or allow sound.");
+      }
+    }
+
+    async function playTrack(name){
+      // Always stop previous
+      stopAllAudio();
+
+      audioOn = true;
+      audioStatus.textContent = "Audio: on";
+
+      const map = {
+        saul: { aud: audSaul, label: "Better Call Saul vibe" },
+        bb: { aud: audBB, label: "Breaking Bad vibe" },
+        friends: { aud: audFriends, label: "Friends vibe" }
+      };
+
+      const item = map[name];
+      nowPlaying.innerHTML = `Now playing: <b>${item.label}</b>`;
+
+      // Try mp3 first (if user added files)
+      const ok = await canPlayAudioElement(item.aud);
+      if(ok){
+        try{
+          item.aud.loop = true;
+          item.aud.play();
+          currentAudio = item.aud;
+          toast("🎧 Playing your local MP3");
+          return;
+        }catch{
+          // Fall through to synth
+        }
+      }
+
+      // Fallback synth (vibe only)
+      const presets = {
+        saul: { name:"saul", type:"triangle" },
+        bb: { name:"bb", type:"sawtooth" },
+        friends: { name:"friends", type:"sine" }
+      };
+      startSynth(presets[name]);
+      toast("🎵 Using built-in vibe synth (add MP3 for real theme).");
+    }
+
+    $("musicToggle").addEventListener("click", async ()=>{
+      audioOn = !audioOn;
+      if(!audioOn){
+        stopAllAudio();
+        toast("🔇 Music OFF");
+        return;
+      }
+      // Start something gentle by default:
+      await playTrack("friends");
+    });
+
+    $("playSaul").addEventListener("click", async ()=>{ await playTrack("saul"); burst(); });
+    $("playBB").addEventListener("click", async ()=>{ await playTrack("bb"); burst(); });
+    $("playFriends").addEventListener("click", async ()=>{ await playTrack("friends"); burst(); });
+
+    $("stopMusic").addEventListener("click", ()=>{
+      audioOn = false;
+      stopAllAudio();
+      toast("⏹ Stopped");
+    });
+
+    // ===== Tick loop (battery friendly) =====
+    function tick(){
+      updateTimes();
+      updateCountdown();
+
+      const diff = valentines - nowIST();
+      const daysLeft = Math.max(0, Math.floor(diff / (1000*60*60*24)));
+      updateDynamicText(daysLeft);
+
+      if(isUnlockedIST()) unlockValentineEverything();
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // If user rotates / resizes, keep signature correct
+    window.addEventListener("resize", ()=>{
+      if(modalBack.style.display === "block") resizeSignCanvas();
+    });
+  </script>
+</body>
+</html>
